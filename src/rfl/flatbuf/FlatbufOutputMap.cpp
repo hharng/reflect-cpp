@@ -31,8 +31,7 @@ SOFTWARE.
 namespace rfl::flatbuf {
 
 void FlatbufOutputMap::add_key(const std::string_view& _key) {
-  const auto offset = fbb_->CreateString(_key.data(), _key.size());
-  keys_.push_back(offset);
+  keys_.emplace_back(fbb_->CreateString(_key.data(), _key.size()));
 }
 
 void FlatbufOutputMap::add_offset(const flatbuffers::uoffset_t _offset) {
