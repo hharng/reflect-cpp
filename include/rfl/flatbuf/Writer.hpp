@@ -186,7 +186,7 @@ class Writer {
 
   void end_array(OutputArrayType* _arr) const noexcept { _arr->end(); }
 
-  void end_map(OutputMapType* _obj) const noexcept {}
+  void end_map(OutputMapType* _map) const noexcept { _map->end(); }
 
   void end_object(OutputObjectType* _obj) const noexcept { _obj->end(); }
 

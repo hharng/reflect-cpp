@@ -32,6 +32,9 @@ struct FlatbufOutputMap : public FlatbufOutputParent {
   /// Adds an offset to the the array.
   void add_offset(const flatbuffers::uoffset_t _offset) final;
 
+  /// Ends the map by adding the keys and values to the builder.
+  void end();
+
   /// Returns the underlying schema.
   const schema::Type::Table& schema() const { return schema_; }
 

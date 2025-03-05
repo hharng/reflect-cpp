@@ -28,6 +28,8 @@ SOFTWARE.
 
 #include <type_traits>
 
+#include "rfl/flatbuf/calc_vtable_offset.hpp"
+
 namespace rfl::flatbuf {
 
 void FlatbufOutputMap::add_key(const std::string_view& _key) {
@@ -38,6 +40,22 @@ void FlatbufOutputMap::add_offset(const flatbuffers::uoffset_t _offset) {
   auto offset = flatbuffers::Offset<>(_offset);
   const auto ptr = internal::ptr_cast<const uint8_t*>(&offset);
   values_.insert(values_.end(), ptr, ptr + sizeof(flatbuffers::Offset<>));
+}
+
+void FlatbufOutputMap::end() {
+  const auto offset_keys =
+      fbb_->CreateVector<flatbuffers::String>(keys_.data(), keys_.size()).o;
+  const auto offset_values = build_vector(value_schema(), values_, fbb_);
+
+  const auto start = fbb_->StartTable();
+  fbb_->AddOffset<>(calc_vtable_offset(0), flatbuffers::Offset<>(offset_keys));
+  fbb_->AddOffset<>(calc_vtable_offset(1),
+                    flatbuffers::Offset<>(offset_values));
+  const auto offset = fbb_->EndTable(start);
+
+  if (parent_) {
+    parent_->add_offset(offset);
+  }
 }
 
 }  // namespace rfl::flatbuf
