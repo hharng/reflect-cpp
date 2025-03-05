@@ -5,6 +5,7 @@
 #include <map>
 #include <memory>
 #include <optional>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 
@@ -76,7 +77,7 @@ struct Type {
   /// Converts to T or throws.
   template <class T>
   const T& convert_to() const {
-    return value.visit([](const auto& _v) -> const T& {
+    return value.visit([this](const auto& _v) -> const T& {
       using V = std::remove_cvref_t<decltype(_v)>;
       if constexpr (std::is_same<T, V>()) {
         return _v;
@@ -87,7 +88,7 @@ struct Type {
         return _v.type_ptr->template convert_to<T>();
       } else {
         std::stringstream stream;
-        stream << "Type pointer points to wrong type: " << _v;
+        stream << "Type pointer points to wrong type.";
         throw std::runtime_error(stream.str());
       }
     });

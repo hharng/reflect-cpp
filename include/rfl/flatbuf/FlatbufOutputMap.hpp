@@ -40,7 +40,7 @@ struct FlatbufOutputMap : public FlatbufOutputParent {
 
   /// Returns the schema of the underlying value
   const schema::Type value_schema() const {
-    return schema_.fields.at(1).second;
+    return *schema_.fields.at(1).second.convert_to<schema::Type::Vector>().type;
   }
 
  private:

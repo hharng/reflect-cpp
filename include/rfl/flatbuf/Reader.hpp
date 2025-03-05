@@ -164,7 +164,48 @@ class Reader {
   template <class MapReader>
   std::optional<Error> read_map(const MapReader& _map_reader,
                                 const InputMapType& _map) const noexcept {
-    // TODO
+    constexpr size_t elem_size_keys = calc_elem_size<std::string>();
+    constexpr size_t elem_size_values =
+        calc_elem_size<typename MapReader::ValueType>();
+
+    if (!_map.val_->VerifyTableStart(*verifier_)) {
+      return Error("Table start could not be verified.");
+    }
+
+    const auto keys =
+        to_array(InputVarType{_map.val_->GetAddressOf(calc_vtable_offset(0))});
+    if (!keys) {
+      return keys.error();
+    }
+
+    const auto values =
+        to_array(InputVarType{_map.val_->GetAddressOf(calc_vtable_offset(1))});
+    if (!values) {
+      return values.error();
+    }
+
+    if (keys->val_->size() != values->val_->size()) {
+      return Error("Length of keys and values do not match. Length keys: " +
+                   std::to_string(keys->val_->size()) +
+                   ", length values: " + std::to_string(values->val_->size()));
+    }
+
+    for (size_t i = 0; i < keys->val_->size(); ++i) {
+      const auto key = to_basic_type<std::string>(
+          InputVarType{flatbuffers::GetAnyVectorElemAddressOf<const uint8_t>(
+              keys->val_, i, elem_size_keys)});
+      if (!key) {
+        return key.error();
+      }
+      _map_reader.read(
+          std::string_view(*key),
+          InputVarType{flatbuffers::GetAnyVectorElemAddressOf<const uint8_t>(
+              values->val_, i, elem_size_values)});
+    }
+
+    verifier_->EndTable();
+
+    return std::nullopt;
   }
 
   template <class ObjectReader>

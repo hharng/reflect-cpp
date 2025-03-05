@@ -61,7 +61,11 @@ Writer::OutputArrayType Writer::add_array_to_union(
 }
 
 Writer::OutputMapType Writer::add_map_to_array(
-    const size_t _size, OutputArrayType* _parent) const noexcept {}
+    const size_t _size, OutputArrayType* _parent) const noexcept {
+  return OutputMapType(
+      _parent->schema().type->convert_to<schema::Type::Table>(), _parent,
+      fbb_.get());
+}
 
 Writer::OutputMapType Writer::add_map_to_map(
     const std::string_view& _name, const size_t _size,
@@ -74,11 +78,22 @@ Writer::OutputMapType Writer::add_map_to_map(
 
 Writer::OutputMapType Writer::add_map_to_object(
     const std::string_view& _name, const size_t _size,
-    OutputObjectType* _parent) const noexcept {}
+    OutputObjectType* _parent) const noexcept {
+  return OutputMapType(
+      _parent->get_current_schema().convert_to<schema::Type::Table>(), _parent,
+      fbb_.get());
+}
 
 Writer::OutputMapType Writer::add_map_to_union(
     const size_t _index, const size_t _size,
-    OutputUnionType* _parent) const noexcept {}
+    OutputUnionType* _parent) const noexcept {
+  _parent->set_index(_index);
+  return OutputMapType(_parent->get_current_schema()
+                           .convert_to<schema::Type::Table>()
+                           .fields.at(0)
+                           .second.convert_to<schema::Type::Table>(),
+                       _parent, fbb_.get());
+}
 
 Writer::OutputObjectType Writer::add_object_to_array(
     const size_t _size, OutputArrayType* _parent) const noexcept {
