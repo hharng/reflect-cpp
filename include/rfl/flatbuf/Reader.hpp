@@ -247,11 +247,11 @@ class Reader {
       return UnionReaderType::read(*this, static_cast<size_t>(disc) - 1, val);
     };
 
-    const auto result =
-        disc == 0 ? UnionReaderType::read(*this, 1, InputVarType{nullptr})
-                  : to_object(InputVarType{_union.val_->GetAddressOf(
-                                  calc_vtable_offset(1))})
-                        .and_then(retrieve_value);
+    auto result = disc == 0
+                      ? UnionReaderType::read(*this, 1, InputVarType{nullptr})
+                      : to_object(InputVarType{_union.val_->GetAddressOf(
+                                      calc_vtable_offset(1))})
+                            .and_then(retrieve_value);
 
     verifier_->EndTable();
 
