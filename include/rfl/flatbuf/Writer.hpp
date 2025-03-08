@@ -209,9 +209,8 @@ class Writer {
                          std::is_integral<std::remove_cvref_t<T>>()) {
       _parent->add_scalar(_var);
 
-      // TODO
-      //} else if constexpr (internal::is_literal_v<T>) {
-      //  return add_value_to_object(_name, _var.value(), _parent);
+    } else if constexpr (internal::is_literal_v<T>) {
+      _parent->add_scalar(static_cast<uint16_t>(_var.value()));
 
     } else {
       static_assert(rfl::always_false_v<T>, "Unsupported type.");

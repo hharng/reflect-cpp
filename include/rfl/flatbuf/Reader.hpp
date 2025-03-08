@@ -91,11 +91,9 @@ class Reader {
       }
       return flatbuffers::ReadScalar<Type>(_var.val_);
 
-      /*} else if constexpr (internal::is_literal_v<T>) {
-        if (type != capnp::DynamicValue::ENUM) {
-          return rfl::Error("Could not cast to an enum.");
-        }
-        return T::from_value(_var.val_.as<capnp::DynamicEnum>().getRaw());*/
+    } else if constexpr (internal::is_literal_v<T>) {
+      return to_basic_type<uint16_t>(_var).and_then(
+          [](auto _v) { return T::from_value(_v); });
 
     } else {
       static_assert(rfl::always_false_v<T>, "Unsupported type.");

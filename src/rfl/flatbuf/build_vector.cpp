@@ -98,7 +98,7 @@ flatbuffers::uoffset_t build_vector(const schema::Type& _type,
           return do_create(TypeWrapper<flatbuffers::Offset<>>{});
 
         } else if constexpr (std::is_same<U, schema::Type::Enum>()) {
-          throw std::runtime_error("TODO");  // TODO
+          return do_create(TypeWrapper<uint16_t>{});
 
         } else if constexpr (std::is_same<U, schema::Type::Vector>()) {
           return do_create(TypeWrapper<flatbuffers::Offset<>>{});

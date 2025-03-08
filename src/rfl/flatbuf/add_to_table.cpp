@@ -53,13 +53,13 @@ void add_to_table(const size_t _i, const schema::Type& _type,
   _type.reflection().visit([&]<class T>(const T& _t) {
     using U = std::remove_cvref_t<T>;
     if constexpr (std::is_same<U, schema::Type::Bool>()) {
-      throw std::runtime_error("TODO");  // TODO
+      throw std::runtime_error("TODO: Bool");  // TODO
 
     } else if constexpr (std::is_same<U, schema::Type::Byte>()) {
-      throw std::runtime_error("TODO");  // TODO
+      throw std::runtime_error("TODO: Byte");  // TODO
 
     } else if constexpr (std::is_same<U, schema::Type::UByte>()) {
-      throw std::runtime_error("TODO");  // TODO
+      throw std::runtime_error("TODO: UByte");  // TODO
 
     } else if constexpr (std::is_same<U, schema::Type::Int8>()) {
       return do_add(TypeWrapper<int8_t>{});
@@ -99,7 +99,7 @@ void add_to_table(const size_t _i, const schema::Type& _type,
       return do_add(TypeWrapper<flatbuffers::Offset<>>{});
 
     } else if constexpr (std::is_same<U, schema::Type::Enum>()) {
-      throw std::runtime_error("TODO");  // TODO
+      return do_add(TypeWrapper<uint16_t>{});
 
     } else if constexpr (std::is_same<U, schema::Type::Reference>()) {
       if (!_t.type_ptr) {
