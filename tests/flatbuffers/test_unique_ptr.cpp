@@ -15,7 +15,7 @@ struct Person {
   std::unique_ptr<std::vector<Person>> children;
 };
 
-TEST(flatbuf, test_unique_ptr) {
+TEST(flatbuffers, test_unique_ptr) {
   auto children = std::make_unique<std::vector<Person>>();
   children->emplace_back(Person{.first_name = "Bart"});
   children->emplace_back(Person{.first_name = "Lisa"});

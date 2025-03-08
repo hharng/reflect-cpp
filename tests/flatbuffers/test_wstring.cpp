@@ -12,7 +12,7 @@ struct TestStruct {
 };
 
 namespace test_wstring {
-TEST(flatbuf, test_wstring) {
+TEST(flatbuffers, test_wstring) {
   const auto test = TestStruct{.theNormalString = "The normal string",
                                .theWiderString = L"The wider string"};
 

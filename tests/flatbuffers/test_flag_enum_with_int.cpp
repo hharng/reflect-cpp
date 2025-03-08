@@ -25,7 +25,7 @@ struct Circle {
   Color color;
 };
 
-TEST(flatbuf, test_flag_enum_with_int) {
+TEST(flatbuffers, test_flag_enum_with_int) {
   const auto circle = Circle{.radius = 2.0, .color = static_cast<Color>(10000)};
 
   write_and_read(circle);

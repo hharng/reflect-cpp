@@ -14,7 +14,7 @@ struct Person {
   std::vector<std::variant<Person, std::string>> children;
 };
 
-TEST(flatbuf, test_variants_in_vectors) {
+TEST(flatbuffers, test_variants_in_vectors) {
   const std::variant<Person, std::string> bart = Person{.first_name = "Bart"};
 
   const std::variant<Person, std::string> lisa = Person{.first_name = "Lisa"};

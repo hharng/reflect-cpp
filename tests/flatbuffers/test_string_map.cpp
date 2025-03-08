@@ -13,7 +13,7 @@ struct RootStruct {
   std::map<std::string, std::unique_ptr<std::string>> root;
 };
 
-TEST(flatbuf, test_string_map) {
+TEST(flatbuffers, test_string_map) {
   RootStruct homer;
   homer.root.insert(
       std::make_pair("firstName", std::make_unique<std::string>("Homer")));

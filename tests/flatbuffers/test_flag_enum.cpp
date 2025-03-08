@@ -25,7 +25,7 @@ struct Circle {
   Color color;
 };
 
-TEST(flatbuf, test_flag_enum) {
+TEST(flatbuffers, test_flag_enum) {
   const auto circle =
       Circle{.radius = 2.0, .color = Color::blue | Color::orange};
 

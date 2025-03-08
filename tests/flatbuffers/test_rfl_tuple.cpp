@@ -15,7 +15,7 @@ struct Person {
   std::unique_ptr<rfl::Tuple<Person, Person, Person>> children = nullptr;
 };
 
-TEST(flatbuf, test_rfl_tuple) {
+TEST(flatbuffers, test_rfl_tuple) {
   auto bart = Person{.first_name = "Bart"};
 
   auto lisa = Person{.first_name = "Lisa"};

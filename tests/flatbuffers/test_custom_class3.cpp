@@ -55,7 +55,7 @@ struct Parser<ReaderType, WriterType, test_custom_class3::Person,
 
 namespace test_custom_class3 {
 
-TEST(flatbuf, test_custom_class3) {
+TEST(flatbuffers, test_custom_class3) {
   const auto bart = Person("Bart", "Simpson", 10);
 
   write_and_read(bart);

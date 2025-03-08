@@ -26,7 +26,7 @@ struct DecisionTree {
   rfl::Field<"leafOrNode", LeafOrNode> leaf_or_node;
 };
 
-TEST(flatbuf, test_unique_ptr2) { 
+TEST(flatbuffers, test_unique_ptr2) { 
   auto leaf1 = DecisionTree::Leaf{.value = 3.0};
 
   auto leaf2 = DecisionTree::Leaf{.value = 5.0};

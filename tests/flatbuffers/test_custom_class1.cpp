@@ -1,7 +1,6 @@
 #include <cassert>
 #include <iostream>
 #include <rfl.hpp>
-#include <rfl/json.hpp>
 #include <string>
 #include <vector>
 
@@ -29,11 +28,8 @@ struct Person {
   PersonImpl impl;
 };
 
-TEST(flatbuf, test_custom_class1) {
+TEST(flatbuffers, test_custom_class1) {
   const auto bart = Person("Bart");
-
-  std::cout << rfl::json::to_schema<Person>() << std::endl;
-
   write_and_read(bart);
 }
 }  // namespace test_custom_class1

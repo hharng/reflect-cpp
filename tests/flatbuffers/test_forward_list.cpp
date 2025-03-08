@@ -13,7 +13,7 @@ struct Person {
   std::unique_ptr<std::forward_list<Person>> children;
 };
 
-TEST(flatbuf, test_forward_list) {
+TEST(flatbuffers, test_forward_list) {
   auto children = std::make_unique<std::forward_list<Person>>();
   children->emplace_front(Person{.first_name = "Maggie"});
   children->emplace_front(Person{.first_name = "Lisa"});

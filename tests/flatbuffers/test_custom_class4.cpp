@@ -61,7 +61,7 @@ struct Parser<ReaderType, WriterType, test_custom_class4::Person,
 
 namespace test_custom_class4 {
 
-TEST(flatbuf, test_custom_class4) {
+TEST(flatbuffers, test_custom_class4) {
   const auto bart = test_custom_class4::Person(
       "Bart", rfl::make_box<std::string>("Simpson"), 10);
 

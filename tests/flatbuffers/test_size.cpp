@@ -16,7 +16,7 @@ struct Person {
       children;
 };
 
-TEST(flatbuf, test_size) {
+TEST(flatbuffers, test_size) {
   const auto bart = Person{
       .first_name = "Bart", .last_name = "Simpson", .birthday = "1987-04-19"};
 

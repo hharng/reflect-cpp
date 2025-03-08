@@ -25,7 +25,7 @@ struct Shapes {
   rfl::Variant<Circle, Rectangle, std::unique_ptr<Square>> root;
 };
 
-TEST(flatbuf, test_rfl_variant) {
+TEST(flatbuffers, test_rfl_variant) {
   const auto r = Shapes{Rectangle{.height = 10, .width = 5}};
 
   write_and_read(r);

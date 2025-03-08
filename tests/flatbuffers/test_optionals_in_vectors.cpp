@@ -14,7 +14,7 @@ struct Person {
   std::vector<std::optional<Person>> children;
 };
 
-TEST(flatbuf, test_optionals_in_vectors) {
+TEST(flatbuffers, test_optionals_in_vectors) {
   const std::optional<Person> bart = Person{.first_name = "Bart"};
 
   const std::optional<Person> lisa = Person{.first_name = "Lisa"};

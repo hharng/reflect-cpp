@@ -13,7 +13,7 @@ struct Person {
   std::map<std::string, Person> children;
 };
 
-TEST(flatbuf, test_map) {
+TEST(flatbuffers, test_map) {
   auto children = std::map<std::string, Person>();
   children.insert(std::make_pair("child1", Person{.first_name = "Bart"}));
   children.insert(std::make_pair("child2", Person{.first_name = "Lisa"}));

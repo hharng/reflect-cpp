@@ -20,7 +20,7 @@ struct Employee {
   float salary;
 };
 
-TEST(flatbuf, test_flatten_anonymous) {
+TEST(flatbuffers, test_flatten_anonymous) {
   const auto employee = Employee{
       .person = Person{.first_name = "Homer",
                        .last_name = rfl::make_box<std::string>("Simpson"),

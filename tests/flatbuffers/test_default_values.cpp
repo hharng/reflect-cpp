@@ -14,7 +14,7 @@ struct Person {
   std::vector<Person> children;
 };
 
-TEST(flatbuf, test_default_values) {
+TEST(flatbuffers, test_default_values) {
   const auto bart = Person{.first_name = "Bart"};
   const auto lisa = Person{.first_name = "Lisa"};
   const auto maggie = Person{.first_name = "Maggie"};

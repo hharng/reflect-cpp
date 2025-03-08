@@ -25,7 +25,7 @@ struct Shapes {
   rfl::TaggedUnion<"shape", Rectangle, Circle, Square> root;
 };
 
-TEST(flatbuf, test_tagged_union) {
+TEST(flatbuffers, test_tagged_union) {
   const auto r = Shapes{Rectangle{.height = 10, .width = 5}};
   write_and_read(r);
 }

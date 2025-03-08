@@ -13,7 +13,7 @@ struct Person {
   std::unique_ptr<std::deque<Person>> children;
 };
 
-TEST(flatbuf, test_default_values) {
+TEST(flatbuffers, test_default_values) {
   auto children = std::make_unique<std::deque<Person>>();
   children->emplace_back(Person{.first_name = "Bart"});
   children->emplace_back(Person{.first_name = "Lisa"});

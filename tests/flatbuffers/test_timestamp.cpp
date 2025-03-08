@@ -16,7 +16,7 @@ struct Person {
   TS birthday;
 };
 
-TEST(flatbuf, test_timestamp) {
+TEST(flatbuffers, test_timestamp) {
   const auto result = TS::from_string("nonsense");
 
   if (result) {

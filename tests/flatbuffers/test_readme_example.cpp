@@ -19,7 +19,7 @@ struct Person {
   std::vector<Person> child;
 };
 
-TEST(flatbuf, test_readme_example) {
+TEST(flatbuffers, test_readme_example) {
   const auto bart = Person{.first_name = "Bart",
                            .birthday = "1987-04-19",
                            .age = 10,

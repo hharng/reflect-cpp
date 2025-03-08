@@ -13,7 +13,7 @@ struct Person {
   std::unique_ptr<std::set<std::string>> children;
 };
 
-TEST(flatbuf, test_set) { 
+TEST(flatbuffers, test_set) { 
   auto children = std::make_unique<std::set<std::string>>(
       std::set<std::string>({"Bart", "Lisa", "Maggie"}));
 

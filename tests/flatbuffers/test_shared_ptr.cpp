@@ -15,7 +15,7 @@ struct Person {
   std::shared_ptr<std::vector<Person>> children;
 };
 
-TEST(flatbuf, test_shared_ptr) {
+TEST(flatbuffers, test_shared_ptr) {
   auto children = std::make_shared<std::vector<Person>>();
   children->emplace_back(Person{.first_name = "Bart"});
   children->emplace_back(Person{.first_name = "Lisa"});
