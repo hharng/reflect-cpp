@@ -20,6 +20,9 @@ class ArrayReader {
   static constexpr size_t size_ = _size;
 
  public:
+  using ValueType = T;
+
+ public:
   ArrayReader(const R* _r, std::array<T, _size>* _array)
       : array_(_array), num_set_(0), r_(_r) {}
 
