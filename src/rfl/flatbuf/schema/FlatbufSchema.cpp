@@ -56,6 +56,10 @@ const schema::Type* FlatbufSchema::find_in_schema(const FlatbufSchema& _schema,
   if (it != _schema.enums_->end()) {
     return &it->second;
   }
+  it = _schema.references_->find(_name);
+  if (it != _schema.references_->end()) {
+    return &it->second;
+  }
   it = _schema.maps_->find(_name);
   if (it != _schema.maps_->end()) {
     return &it->second;
@@ -98,6 +102,7 @@ Result<FlatbufSchema> FlatbufSchema::set_reference_ptrs() const {
     set_reference_ptrs_on_map(schema, schema.structs_.get());
     set_reference_ptrs_on_map(schema, schema.enums_.get());
     set_reference_ptrs_on_map(schema, schema.maps_.get());
+    set_reference_ptrs_on_map(schema, schema.references_.get());
     set_reference_ptrs_on_map(schema, schema.tuples_.get());
     set_reference_ptrs_on_map(schema, schema.unions_.get());
     set_reference_ptrs_on_map(schema, schema.union_helpers_.get());

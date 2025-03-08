@@ -49,6 +49,20 @@ Type Type::with_name(const std::string& _name) const {
   return Type{.value = value.visit(set_name)};
 }
 
+std::string get_reference_name(const Type::Reference& _r) {
+  if (!_r.type_ptr) {
+    throw std::runtime_error("type_ptr on reference not set.");
+  }
+  return _r.type_ptr->value.visit([&](const auto& _v) -> std::string {
+    using V = std::remove_cvref_t<decltype(_v)>;
+    if constexpr (std::is_same<V, Type::Reference>()) {
+      return get_reference_name(_v);
+    } else {
+      return internal::strings::to_pascal_case(_r.type_name);
+    }
+  });
+}
+
 std::ostream& operator<<(std::ostream& _os, const Type::Bool&) {
   return _os << "bool";
 }
@@ -141,7 +155,7 @@ std::ostream& operator<<(std::ostream& _os, const Type::Union& _u) {
 }
 
 std::ostream& operator<<(std::ostream& _os, const Type::Reference& _r) {
-  return _os << internal::strings::to_pascal_case(_r.type_name);
+  return _os << get_reference_name(_r);
 }
 
 std::ostream& operator<<(std::ostream& _os, const Type& _t) {

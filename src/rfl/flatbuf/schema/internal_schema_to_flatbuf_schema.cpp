@@ -235,8 +235,18 @@ Type reference_to_flatbuf_schema_type(
   if (it == _definitions.end() || is_named_type(it->second)) {
     return Type{.value = Type::Reference{.type_name = _reference.name_}};
   } else {
-    return type_to_flatbuf_schema_type(it->second, _definitions, _is_top_level,
-                                       _flatbuf_schema);
+    return it->second.variant_.visit([&](const auto& _v) -> Type {
+      using V = std::remove_cvref_t<decltype(_v)>;
+      if constexpr (std::is_same_v<V, parsing::schema::Type::Reference>) {
+        (*_flatbuf_schema->references_)[_reference.name_] =
+            Type{.value = Type::Reference{.type_name = _v.name_}};
+        return reference_to_flatbuf_schema_type(_v, _definitions, _is_top_level,
+                                                _flatbuf_schema);
+      } else {
+        return type_to_flatbuf_schema_type(it->second, _definitions,
+                                           _is_top_level, _flatbuf_schema);
+      }
+    });
   }
 }
 

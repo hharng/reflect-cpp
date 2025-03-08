@@ -13,6 +13,7 @@ struct FlatbufSchema {
  public:
   Ref<std::map<std::string, schema::Type>> structs_;
   Ref<std::map<std::string, schema::Type>> enums_;
+  Ref<std::map<std::string, schema::Type>> references_;
   Ref<std::map<std::string, schema::Type>> tuples_;
   Ref<std::map<std::string, schema::Type>> maps_;
   Ref<std::map<std::string, schema::Type>> unions_;
