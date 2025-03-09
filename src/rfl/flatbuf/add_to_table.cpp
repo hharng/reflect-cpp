@@ -26,6 +26,7 @@ SOFTWARE.
 
 #include "rfl/flatbuf/add_to_table.hpp"
 
+#include <cstddef>
 #include <type_traits>
 
 #include "rfl/flatbuf/calc_vtable_offset.hpp"
@@ -44,6 +45,8 @@ void add_to_table(const size_t _i, const schema::Type& _type,
           calc_vtable_offset(_i),
           flatbuffers::Offset<>(
               *internal::ptr_cast<const flatbuffers::uoffset_t*>(&_val)));
+    } else if constexpr (std::is_same<T, bool>()) {
+      _fbb->AddElement<bool>(calc_vtable_offset(_i), _val == 1);
     } else {
       _fbb->AddElement<T>(calc_vtable_offset(_i),
                           *internal::ptr_cast<const T*>(&_val));
@@ -53,13 +56,13 @@ void add_to_table(const size_t _i, const schema::Type& _type,
   _type.reflection().visit([&]<class T>(const T& _t) {
     using U = std::remove_cvref_t<T>;
     if constexpr (std::is_same<U, schema::Type::Bool>()) {
-      throw std::runtime_error("TODO: Bool");  // TODO
+      return do_add(TypeWrapper<bool>{});
 
     } else if constexpr (std::is_same<U, schema::Type::Byte>()) {
-      throw std::runtime_error("TODO: Byte");  // TODO
+      return do_add(TypeWrapper<std::byte>{});
 
     } else if constexpr (std::is_same<U, schema::Type::UByte>()) {
-      throw std::runtime_error("TODO: UByte");  // TODO
+      return do_add(TypeWrapper<uint8_t>{});
 
     } else if constexpr (std::is_same<U, schema::Type::Int8>()) {
       return do_add(TypeWrapper<int8_t>{});

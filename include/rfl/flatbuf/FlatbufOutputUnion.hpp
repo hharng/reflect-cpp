@@ -25,9 +25,17 @@ struct FlatbufOutputUnion : public FlatbufOutputParent {
   /// Adds a scalar to the object.
   template <class T>
   void add_scalar(const T _val) {
-    static_assert(sizeof(T) <= sizeof(uint64_t),
-                  "Size cannot be greater than 4.");
-    std::memcpy(&data_, &_val, sizeof(T));
+    if constexpr (std::is_same_v<std::remove_cvref_t<T>, bool>) {
+      if (_val) {
+        data_ = 1;
+      } else {
+        data_ = 0;
+      }
+    } else {
+      static_assert(sizeof(T) <= sizeof(uint64_t),
+                    "Size cannot be greater than 4.");
+      std::memcpy(&data_, &_val, sizeof(T));
+    }
     end();
   }
 

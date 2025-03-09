@@ -56,13 +56,13 @@ flatbuffers::uoffset_t build_vector(const schema::Type& _type,
       [&]<class T>(const T& _t) -> flatbuffers::uoffset_t {
         using U = std::remove_cvref_t<T>;
         if constexpr (std::is_same<U, schema::Type::Bool>()) {
-          throw std::runtime_error("TODO");  // TODO
+          throw std::runtime_error("TODO: bool");
 
         } else if constexpr (std::is_same<U, schema::Type::Byte>()) {
-          throw std::runtime_error("TODO");  // TODO
+          return do_create(TypeWrapper<std::byte>{});
 
         } else if constexpr (std::is_same<U, schema::Type::UByte>()) {
-          throw std::runtime_error("TODO");  // TODO
+          return do_create(TypeWrapper<uint8_t>{});
 
         } else if constexpr (std::is_same<U, schema::Type::Int8>()) {
           return do_create(TypeWrapper<int8_t>{});

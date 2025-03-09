@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <cstring>
+#include <type_traits>
 #include <vector>
 
 #include "FlatbufOutputParent.hpp"
@@ -27,10 +28,18 @@ struct FlatbufOutputObject : public FlatbufOutputParent {
   /// Adds a scalar to the object.
   template <class T>
   void add_scalar(const T _val) {
-    static_assert(sizeof(T) <= sizeof(uint64_t),
-                  "Size cannot be greater than 4.");
-    data_.push_back(0);
-    std::memcpy(&data_.back(), &_val, sizeof(T));
+    if constexpr (std::is_same_v<std::remove_cvref_t<T>, bool>) {
+      if (_val) {
+        data_.push_back(1);
+      } else {
+        data_.push_back(0);
+      }
+    } else {
+      static_assert(sizeof(T) <= sizeof(uint64_t),
+                    "Size cannot be greater than 4.");
+      data_.push_back(0);
+      std::memcpy(&data_.back(), &_val, sizeof(T));
+    }
   }
 
   /// Adds an offset to the the array.
