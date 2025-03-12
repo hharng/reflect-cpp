@@ -261,15 +261,30 @@ Type type_to_flatbuf_schema_type(
       return schema::Type{.value = schema::Type::Bool{}};
 
     } else if constexpr (std::is_same<T, Type::Bytestring>()) {
-      // TODO: Implement
-      return schema::Type{.value = schema::Type::String{}};
+      return schema::Type{.value = schema::Type::Vector{
+                              .type = Ref<schema::Type>::make(
+                                  schema::Type{schema::Type::Byte{}})}};
 
-    } else if constexpr (std::is_same<T, Type::Int32>() ||
-                         std::is_same<T, Type::Integer>()) {
+    } else if constexpr (std::is_same<T, Type::Byte>()) {
+      return schema::Type{.value = schema::Type::Byte{}};
+
+    } else if constexpr (std::is_same<T, Type::Int8>()) {
+      return schema::Type{.value = schema::Type::Int8{}};
+
+    } else if constexpr (std::is_same<T, Type::Int16>()) {
+      return schema::Type{.value = schema::Type::Int16{}};
+
+    } else if constexpr (std::is_same<T, Type::Int32>()) {
       return schema::Type{.value = schema::Type::Int32{}};
 
     } else if constexpr (std::is_same<T, Type::Int64>()) {
       return schema::Type{.value = schema::Type::Int64{}};
+
+    } else if constexpr (std::is_same<T, Type::UInt8>()) {
+      return schema::Type{.value = schema::Type::UInt8{}};
+
+    } else if constexpr (std::is_same<T, Type::UInt16>()) {
+      return schema::Type{.value = schema::Type::UInt16{}};
 
     } else if constexpr (std::is_same<T, Type::UInt32>()) {
       return schema::Type{.value = schema::Type::UInt32{}};

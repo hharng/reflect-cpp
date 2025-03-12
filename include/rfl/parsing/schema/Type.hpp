@@ -18,15 +18,23 @@ struct Type {
 
   struct Bytestring {};
 
+  struct Byte {};
+
+  struct Int8 {};
+
+  struct Int16 {};
+
   struct Int32 {};
 
   struct Int64 {};
 
+  struct UInt8 {};
+
+  struct UInt16 {};
+
   struct UInt32 {};
 
   struct UInt64 {};
-
-  struct Integer {};
 
   struct Float {};
 
@@ -88,10 +96,10 @@ struct Type {
   };
 
   using VariantType =
-      rfl::Variant<Boolean, Bytestring, Int32, Int64, UInt32, UInt64, Integer,
-                   Float, Double, String, AnyOf, Description,
-                   FixedSizeTypedArray, Literal, Object, Optional, Reference,
-                   StringMap, Tuple, TypedArray, Validated>;
+      rfl::Variant<Boolean, Bytestring, Byte, Int8, Int16, Int32, UInt8, UInt16,
+                   Int64, UInt32, UInt64, Float, Double, String, AnyOf,
+                   Description, FixedSizeTypedArray, Literal, Object, Optional,
+                   Reference, StringMap, Tuple, TypedArray, Validated>;
 
   Type();
 

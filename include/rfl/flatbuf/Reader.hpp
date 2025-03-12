@@ -74,15 +74,6 @@ class Reader {
       };
       return str->str();
 
-      /*} else if constexpr (std::is_same<Type,
-                                        rfl::Bytestring>()) {
-        if (type != capnp::DynamicValue::DATA) {
-          return Error("Could not cast to bytestring.");
-        }
-        const auto data = _var.val_.as<capnp::Data>();
-        return rfl::Bytestring(internal::ptr_cast<const
-        std::byte*>(data.begin()), data.size());*/
-
     } else if constexpr (std::is_same<Type, bool>() ||
                          std::is_floating_point<Type>() ||
                          std::is_integral<Type>()) {

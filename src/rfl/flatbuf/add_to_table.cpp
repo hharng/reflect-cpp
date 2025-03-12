@@ -61,9 +61,6 @@ void add_to_table(const size_t _i, const schema::Type& _type,
     } else if constexpr (std::is_same<U, schema::Type::Byte>()) {
       return do_add(TypeWrapper<std::byte>{});
 
-    } else if constexpr (std::is_same<U, schema::Type::UByte>()) {
-      return do_add(TypeWrapper<uint8_t>{});
-
     } else if constexpr (std::is_same<U, schema::Type::Int8>()) {
       return do_add(TypeWrapper<int8_t>{});
 

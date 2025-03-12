@@ -14,13 +14,13 @@ namespace rfl::parsing {
 
 template <class R, class W, class MapType, class ProcessorsType>
 class MapReader {
- public:
-  using ValueType =
-      std::remove_cvref_t<typename MapType::value_type::second_type>;
-
  private:
   using InputVarType = typename R::InputVarType;
   using KeyType = std::remove_cvref_t<typename MapType::value_type::first_type>;
+
+ public:
+  using ValueType =
+      std::remove_cvref_t<typename MapType::value_type::second_type>;
 
  public:
   MapReader(const R* _r, MapType* _map, std::vector<Error>* _errors)

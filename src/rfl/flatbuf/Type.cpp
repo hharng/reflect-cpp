@@ -71,10 +71,6 @@ std::ostream& operator<<(std::ostream& _os, const Type::Byte&) {
   return _os << "byte";
 }
 
-std::ostream& operator<<(std::ostream& _os, const Type::UByte&) {
-  return _os << "ubyte";
-}
-
 std::ostream& operator<<(std::ostream& _os, const Type::Int8&) {
   return _os << "int8";
 }

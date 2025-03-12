@@ -155,20 +155,36 @@ struct Parser {
     } else if constexpr (std::is_same<U, rfl::Bytestring>()) {
       return Type{Type::Bytestring{}};
 
-    } else if constexpr (std::is_same<U, std::int32_t>()) {
-      return Type{Type::Int32{}};
+    } else if constexpr (std::is_same<U, std::byte>()) {
+      return Type{Type::Byte{}};
 
-    } else if constexpr (std::is_same<U, std::int64_t>()) {
-      return Type{Type::Int64{}};
+    } else if constexpr (std::is_integral_v<U> && std::is_signed_v<U>) {
+      if constexpr (sizeof(U) == 1) {
+        return Type{Type::Int8{}};
+      } else if constexpr (sizeof(U) == 2) {
+        return Type{Type::Int16{}};
+      } else if constexpr (sizeof(U) == 4) {
+        return Type{Type::Int32{}};
+      } else if constexpr (sizeof(U) == 8) {
+        return Type{Type::Int64{}};
+      } else {
+        static_assert(rfl::always_false_v<U>,
+                      "Unsupported signed integer size.");
+      }
 
-    } else if constexpr (std::is_same<U, std::uint32_t>()) {
-      return Type{Type::UInt32{}};
-
-    } else if constexpr (std::is_same<U, std::uint64_t>()) {
-      return Type{Type::UInt64{}};
-
-    } else if constexpr (std::is_integral<U>()) {
-      return Type{Type::Integer{}};
+    } else if constexpr (std::is_integral_v<U> && !std::is_signed_v<U>) {
+      if constexpr (sizeof(U) == 1) {
+        return Type{Type::UInt8{}};
+      } else if constexpr (sizeof(U) == 2) {
+        return Type{Type::UInt16{}};
+      } else if constexpr (sizeof(U) == 4) {
+        return Type{Type::UInt32{}};
+      } else if constexpr (sizeof(U) == 8) {
+        return Type{Type::UInt64{}};
+      } else {
+        static_assert(rfl::always_false_v<U>,
+                      "Unsupported unsigned integer size.");
+      }
 
     } else if constexpr (std::is_same<U, float>()) {
       return Type{Type::Float{}};
@@ -221,7 +237,7 @@ struct Parser {
     using S = internal::enums::StringConverter<U>;
     if constexpr (ProcessorsType::underlying_enums_ ||
                   schemaful::IsSchemafulReader<R>) {
-      return Type{Type::Integer{}};
+      return Type{Type::Int32{}};
     } else if constexpr (S::is_flag_enum_) {
       return Type{Type::String{}};
     } else {
@@ -237,7 +253,7 @@ struct Parser {
     const auto name = make_type_name<U>();
     if (_definitions->find(name) == _definitions->end()) {
       (*_definitions)[name] =
-          Type{Type::Integer{}};  // Placeholder to avoid infinite loop.
+          Type{Type::Int32{}};  // Placeholder to avoid infinite loop.
       if constexpr (internal::has_reflection_type_v<U>) {
         (*_definitions)[name] =
             Parser<R, W, typename U::ReflectionType, ProcessorsType>::to_schema(

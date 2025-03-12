@@ -61,9 +61,6 @@ flatbuffers::uoffset_t build_vector(const schema::Type& _type,
         } else if constexpr (std::is_same<U, schema::Type::Byte>()) {
           return do_create(TypeWrapper<std::byte>{});
 
-        } else if constexpr (std::is_same<U, schema::Type::UByte>()) {
-          return do_create(TypeWrapper<uint8_t>{});
-
         } else if constexpr (std::is_same<U, schema::Type::Int8>()) {
           return do_create(TypeWrapper<int8_t>{});
 

@@ -42,11 +42,15 @@ std::string numeric_type_to_string(const parsing::schema::Type& _type) {
   const auto handle_variant = [](const auto& _t) -> std::string {
     using T = std::remove_cvref_t<decltype(_t)>;
     using Type = parsing::schema::Type;
-    if constexpr (std::is_same<T, Type::Int32>() ||
+    if constexpr (std::is_same<T, Type::Byte>() ||
+                  std::is_same<T, Type::Int8>() ||
+                  std::is_same<T, Type::Int16>() ||
+                  std::is_same<T, Type::Int32>() ||
                   std::is_same<T, Type::Int64>() ||
+                  std::is_same<T, Type::UInt8>() ||
+                  std::is_same<T, Type::UInt16>() ||
                   std::is_same<T, Type::UInt32>() ||
-                  std::is_same<T, Type::UInt64>() ||
-                  std::is_same<T, Type::Integer>()) {
+                  std::is_same<T, Type::UInt64>()) {
       return schema::Type::Integer{}.type.str();
     } else {
       return schema::Type::Number{}.type.str();
@@ -180,11 +184,15 @@ schema::Type type_to_json_schema_type(const parsing::schema::Type& _type) {
     if constexpr (std::is_same<T, Type::Boolean>()) {
       return schema::Type{.value = schema::Type::Boolean{}};
 
-    } else if constexpr (std::is_same<T, Type::Int32>() ||
+    } else if constexpr (std::is_same<T, Type::Byte>() ||
+                         std::is_same<T, Type::Int8>() ||
+                         std::is_same<T, Type::Int16>() ||
+                         std::is_same<T, Type::Int32>() ||
                          std::is_same<T, Type::Int64>() ||
+                         std::is_same<T, Type::UInt8>() ||
+                         std::is_same<T, Type::UInt16>() ||
                          std::is_same<T, Type::UInt32>() ||
-                         std::is_same<T, Type::UInt64>() ||
-                         std::is_same<T, Type::Integer>()) {
+                         std::is_same<T, Type::UInt64>()) {
       return schema::Type{.value = schema::Type::Integer{}};
 
     } else if constexpr (std::is_same<T, Type::Float>() ||
