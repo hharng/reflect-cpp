@@ -9,7 +9,8 @@
 namespace test_bytestring {
 
 struct TestStruct {
-  rfl::Bytestring bytestring;
+  //  rfl::Bytestring bytestring;
+  std::vector<std::byte> bytestring;
 };
 
 TEST(flatbuffers, test_bytestring) {
