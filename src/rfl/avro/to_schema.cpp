@@ -53,11 +53,13 @@ schema::Type type_to_avro_schema_type(
     } else if constexpr (std::is_same<T, Type::Bytestring>()) {
       return schema::Type{.value = schema::Type::Bytes{}};
 
-    } else if constexpr (std::is_same<T, Type::Int32>() ||
-                         std::is_same<T, Type::Int64>() ||
-                         std::is_same<T, Type::UInt32>() ||
-                         std::is_same<T, Type::UInt64>() ||
-                         std::is_same<T, Type::Integer>()) {
+    } else if constexpr (std::is_same<T, Type::Byte>() ||
+                         std::is_same<T, Type::Int8>() ||
+                         std::is_same<T, Type::Int16>() ||
+                         std::is_same<T, Type::UInt8>() ||
+                         std::is_same<T, Type::UInt16>() ||
+                         std::is_same<T, Type::Int32>() ||
+                         std::is_same<T, Type::Int64>()) {
       return schema::Type{.value = schema::Type::Int{}};
 
     } else if constexpr (std::is_same<T, Type::Int64>() ||
