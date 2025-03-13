@@ -7,6 +7,7 @@
 #include <rfl/bson.hpp>
 #include <rfl/capnproto.hpp>
 #include <rfl/cbor.hpp>
+#include <rfl/flatbuf.hpp>
 #include <rfl/flexbuf.hpp>
 #include <rfl/json.hpp>
 #include <rfl/msgpack.hpp>
@@ -107,6 +108,17 @@ static void BM_canada_read_reflect_cpp_cbor_without_field_names(
   }
 }
 BENCHMARK(BM_canada_read_reflect_cpp_cbor_without_field_names);
+
+static void BM_canada_read_reflect_cpp_flatbuf(benchmark::State &state) {
+  const auto data = rfl::flatbuf::write(load_data());
+  for (auto _ : state) {
+    const auto res = rfl::flatbuf::read<FeatureCollection>(data);
+    if (!res) {
+      std::cout << res.error().what() << std::endl;
+    }
+  }
+}
+BENCHMARK(BM_canada_read_reflect_cpp_flatbuf);
 
 static void BM_canada_read_reflect_cpp_flexbuf(benchmark::State &state) {
   const auto data = rfl::flexbuf::write(load_data());

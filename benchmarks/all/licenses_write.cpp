@@ -7,6 +7,7 @@
 #include <rfl/bson.hpp>
 #include <rfl/capnproto.hpp>
 #include <rfl/cbor.hpp>
+#include <rfl/flatbuf.hpp>
 #include <rfl/flexbuf.hpp>
 #include <rfl/json.hpp>
 #include <rfl/msgpack.hpp>
@@ -122,6 +123,17 @@ static void BM_licenses_write_reflect_cpp_cbor_without_field_names(
   }
 }
 BENCHMARK(BM_licenses_write_reflect_cpp_cbor_without_field_names);
+
+static void BM_licenses_write_reflect_cpp_flatbuf(benchmark::State &state) {
+  const auto data = load_data();
+  for (auto _ : state) {
+    const auto output = rfl::flatbuf::write(data);
+    if (output.size() == 0) {
+      std::cout << "No output" << std::endl;
+    }
+  }
+}
+BENCHMARK(BM_licenses_write_reflect_cpp_flatbuf);
 
 static void BM_licenses_write_reflect_cpp_flexbuf(benchmark::State &state) {
   const auto data = load_data();
