@@ -29,8 +29,12 @@ struct FlatbufOutputArray : public FlatbufOutputParent {
   /// Adds a scalar to the array.
   template <class T>
   void add_scalar(const T _val) {
-    auto ptr = internal::ptr_cast<const uint8_t*>(&_val);
-    data_.insert(data_.end(), ptr, ptr + sizeof(T));
+    if constexpr (std::is_same_v<std::remove_cvref_t<T>, bool>) {
+      data_.push_back(static_cast<uint8_t>(_val));
+    } else {
+      auto ptr = internal::ptr_cast<const uint8_t*>(&_val);
+      data_.insert(data_.end(), ptr, ptr + sizeof(T));
+    }
   }
 
   /// Adds an offset to the the array.

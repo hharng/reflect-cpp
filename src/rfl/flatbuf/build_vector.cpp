@@ -44,6 +44,16 @@ flatbuffers::uoffset_t build_vector(const schema::Type& _type,
               internal::ptr_cast<const flatbuffers::Offset<>*>(_data.data()),
               _data.size() / sizeof(flatbuffers::Offset<>))
           .o;
+
+    } else if constexpr (std::is_same<T, bool>()) {
+      _fbb->StartVector<uint8_t>(_data.size());
+      for (auto i = _data.size(); i > 0;) {
+        _fbb->PushElement(_data[--i]);
+      }
+      return flatbuffers::Offset<flatbuffers::Vector<uint8_t>>(
+                 _fbb->EndVector(_data.size()))
+          .o;
+
     } else {
       return _fbb
           ->CreateVector<T>(internal::ptr_cast<const T*>(_data.data()),
@@ -56,7 +66,7 @@ flatbuffers::uoffset_t build_vector(const schema::Type& _type,
       [&]<class T>(const T& _t) -> flatbuffers::uoffset_t {
         using U = std::remove_cvref_t<T>;
         if constexpr (std::is_same<U, schema::Type::Bool>()) {
-          throw std::runtime_error("TODO: bool");
+          return do_create(TypeWrapper<bool>{});
 
         } else if constexpr (std::is_same<U, schema::Type::Byte>()) {
           return do_create(TypeWrapper<std::byte>{});
