@@ -131,7 +131,8 @@ std::ostream& operator<<(std::ostream& _os, const Type::Table& _t) {
     _os << std::endl;
   }
   for (const auto& f : _t.fields) {
-    _os << " " << f.first << ":" << f.second << ";" << std::endl;
+    _os << " " << internal::strings::to_snake_case(f.first) << ":" << f.second
+        << ";" << std::endl;
   }
   return _os << "}" << std::endl;
 }

@@ -35,8 +35,6 @@ namespace rfl::flatbuf {
 
 class Writer {
  public:
-  // TODO
-
   struct FlatbufOutputVar {};
 
   using OutputArrayType = FlatbufOutputArray;
@@ -199,10 +197,6 @@ class Writer {
     if constexpr (std::is_same<std::remove_cvref_t<T>, std::string>()) {
       const auto str = fbb_->CreateString(_var.c_str(), _var.size());
       _parent->add_offset(str.o);
-
-      // TODO
-      // } else if constexpr (std::is_same<std::remove_cvref_t<T>,
-      //                                   rfl::Bytestring>()) {
 
     } else if constexpr (std::is_floating_point<std::remove_cvref_t<T>>() ||
                          std::is_same<std::remove_cvref_t<T>, bool>() ||

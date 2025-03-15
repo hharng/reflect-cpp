@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace rfl ::internal ::strings {
+namespace rfl::internal::strings {
 
 char to_lower(const char ch) {
   if (ch >= 'A' && ch <= 'Z') {
@@ -81,6 +81,21 @@ std::string to_pascal_case(const std::string& _str) {
   auto result = to_camel_case("_" + _str);
   if (result.size() > 0) {
     result[0] = to_upper(result[0]);
+  }
+  return result;
+}
+
+std::string to_snake_case(const std::string& _str) {
+  std::string result;
+  for (const char ch : _str) {
+    if (ch >= 'A' && ch <= 'Z') {
+      if (result.size() != 0) {
+        result.push_back('_');
+      }
+      result.push_back(to_lower(ch));
+    } else {
+      result.push_back(ch);
+    }
   }
   return result;
 }

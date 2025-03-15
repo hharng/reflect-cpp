@@ -24,6 +24,9 @@ std::string to_camel_case(const std::string& _str);
 /// Transforms the string to pascal case.
 std::string to_pascal_case(const std::string& _str);
 
+/// Transforms the string to snake case.
+std::string to_snake_case(const std::string& _str);
+
 }  // namespace rfl::internal::strings
 
 #endif
